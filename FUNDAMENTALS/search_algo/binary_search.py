@@ -14,7 +14,7 @@ def binary_search(inp_list, target):
         return "Target not found"
 
 
-#should be sorted list
+# should be sorted list
 my_list = list(int(x) for x in input().split(", "))
 my_target = int(input())
 result = binary_search(my_list, my_target)

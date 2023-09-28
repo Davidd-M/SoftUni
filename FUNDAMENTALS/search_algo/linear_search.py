@@ -7,10 +7,10 @@ def linear_search(inp_list, target):
             return target
 
 
-inp_list = [1, 3, 5, 7, 9, 11]
-target = 7
-result = linear_search(inp_list, target)
+my_list = [1, 3, 5, 7, 9, 11]
+my_target = 7
+result = linear_search(my_list, my_target)
 if result != -1:
-    print(f"The target element {target} is at index {result}.")
+    print(f"The target element {my_target} is at index {result}.")
 else:
-    print(f"The target element {target} was not found in the list.")
+    print(f"The target element {my_target} was not found in the list.")
