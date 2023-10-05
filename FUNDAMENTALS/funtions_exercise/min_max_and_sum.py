@@ -15,5 +15,5 @@ def min_max(int_lists):
 
 minimum, maximum, summ = min_max(int_list)
 print(f"The minimum number is {minimum}")
-print(f"The maximum number is {maximum}" )
+print(f"The maximum number is {maximum}")
 print(f"The sum number is: {summ}")
