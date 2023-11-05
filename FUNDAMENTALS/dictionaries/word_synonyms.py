@@ -1,0 +1,12 @@
+n = int(input())
+synonyms_dict = {}
+
+for i in range(n):
+    word = input()
+    synonym = input()
+    if word not in synonyms_dict.keys():
+        synonyms_dict[word] = []
+    synonyms_dict[word].append(synonym)
+
+for word, synonyms in synonyms_dict.items():
+    print(f"{word} - {', '.join(synonyms)}")
