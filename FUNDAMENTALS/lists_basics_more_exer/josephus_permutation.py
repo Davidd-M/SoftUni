@@ -7,4 +7,4 @@ while people_list:
     index = (index + skips - 1) % len(people_list)
     output.append(people_list.pop(index))
 
-print(output)
+print("[" + ','.join(output) + "]")
