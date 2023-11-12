@@ -1,5 +1,5 @@
-input_list = input().split(":")
-input_list.pop(0)
-for sequence in input_list:
-    emoji = sequence[:1]
-    print(f":{emoji}")
+input_string = input()
+
+for index, character in enumerate(input_string):
+    if character == ":":
+        print(f":{input_string[index + 1]}")
