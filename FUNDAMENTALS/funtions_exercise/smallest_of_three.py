@@ -1,5 +1,5 @@
-def sort_numbers(input_string):
-    numbers = input_string.split()
+def sort_numbers(input_list):
+    numbers = input_list
     sorted_numbers = sorted(numbers, key=int)
     sorted_numbers_int = []
 
@@ -9,6 +9,13 @@ def sort_numbers(input_string):
     return sorted_numbers_int
 
 
-input_string = input()
-sorted_result = sort_numbers(input_string)
-print(sorted_result)
+input_list = []
+input_str = input()
+try:
+    while True:
+        input_list.append(input_str)
+        input_str = input()
+except EOFError:
+    pass
+sorted_result = sort_numbers(input_list)
+print(min(sorted_result))

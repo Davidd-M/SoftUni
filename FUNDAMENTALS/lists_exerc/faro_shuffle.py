@@ -6,8 +6,8 @@ shuffled_deck = [deck[0], deck[-1]]
 
 for _ in range(faro_shuffles):
     half_length = len(deck) // 2
-    list1 = deck[:half_length]  # Fixed the indexing here
-    list2 = deck[half_length:]  # Fixed the indexing here
+    list1 = deck[:half_length]
+    list2 = deck[half_length:]
 
     shuffled_deck = []
 
@@ -18,6 +18,6 @@ for _ in range(faro_shuffles):
     deck = shuffled_deck
 
 # Append the last card to the shuffled_deck list
-shuffled_deck.append(deck[-1])
+#shuffled_deck.append(deck[-1])
 
 print(shuffled_deck)
