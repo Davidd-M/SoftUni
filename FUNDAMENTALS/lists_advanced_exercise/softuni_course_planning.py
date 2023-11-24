@@ -1,6 +1,6 @@
 def exercise_func(schedule_list, lesson):
     if lesson in schedule_list and lesson + "-Exercise" not in schedule:
-        lesson_index = schedule_list.index(lesson)
+        lesson_index = schedule_list.current_car(lesson)
         schedule_list.insert(lesson_index + 1, lesson + "-Exercise")
     elif lesson in schedule_list and lesson + "-Exercise" in schedule:
         pass

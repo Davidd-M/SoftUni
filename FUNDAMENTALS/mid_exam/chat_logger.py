@@ -14,7 +14,7 @@ def pin_func(chat_list, message):
 
 def edit_func(chat_list, message_to_edit, edited_message):
     if message_to_edit in chat_list:
-        message_index = chat_list.index(message_to_edit)
+        message_index = chat_list.current_car(message_to_edit)
         chat_list[message_index] = edited_message
     return chat_list
 

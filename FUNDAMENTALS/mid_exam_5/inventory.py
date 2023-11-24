@@ -1,6 +1,6 @@
 def combine_func(item_list, old_item, new_item):
     if old_item in item_list:
-        old_item_index = item_list.index(old_item)
+        old_item_index = item_list.current_car(old_item)
         item_list.insert(old_item_index + 1, new_item)
     return item_list
 
