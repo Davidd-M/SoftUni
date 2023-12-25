@@ -6,7 +6,6 @@ start_index = -1
 
 for row in range(rows):
     curr_row = []
-    end_str = cols % len(snake_string)
     for col in range(cols):
         start_index += 1
         curr_row.append(snake_string[start_index % len(snake_string)])
