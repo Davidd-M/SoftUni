@@ -1,5 +1,5 @@
-from user import User
-from library import Library
+from project.user import User
+from project.library import Library
 
 
 class Registration:
@@ -16,5 +16,23 @@ class Registration:
             return "We could not find such user to remove!"
 
     def change_username(self, user_id: int, new_username: str, library: Library):
-        if user_id in library.user_records:
+        user = None
+        for u in library.user_records:
+            if u.user_id == user_id:
+                user = u
+                break
+
+        if not user:
+            return f"There is no user with id = {user_id}!"
+
+        if user.username == new_username:
+            return "Please check again the provided username - it should be different than the username used so far!"
+
+        try:
+            library.rented_books[new_username] = library.rented_books.pop(user.username)
+        except KeyError:
             pass
+
+        user.username = new_username
+        return f"Username successfully changed to: {new_username} for user id: {user_id}"
+
