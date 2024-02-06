@@ -5,6 +5,10 @@ class NameTooShortError(Exception):
     pass
 
 
+class NameTooLongError(Exception):
+    pass
+
+
 class MustContainAtSymbolError(Exception):
     pass
 
@@ -21,11 +25,21 @@ class InvalidNameError(Exception):
     pass
 
 
+def check_consecutive_dots(email_to_check):
+    """
+    Check for consecutive dots in the email address.
+    """
+    local_part = email.split('@')[0]
+    if '..' in local_part:
+        return True
+    return False
+
+
 VALID_DOMAINS = ("com", "bg", "org", "net")
 MIN_NAME_SYMBOLS_COUNT = 4
 
 pattern_name = r'\w+'
-email = input()
+email = input().strip()
 
 while email != "End":
     if email.count("@") > 1:
@@ -34,6 +48,10 @@ while email != "End":
         raise MustContainAtSymbolError("Email must contain @")
     if len(email.split("@")[0]) <= MIN_NAME_SYMBOLS_COUNT:
         raise NameTooShortError("Name must be more than 4 characters")
+    if len(email) > 254:
+        raise NameTooLongError("Name must be less than 255 characters")
+    if check_consecutive_dots(email):
+        raise InvalidNameError("Name must not contain consecutive dots")
     if email.split(".")[-1] not in VALID_DOMAINS:
         raise InvalidDomainError(f"Domain must be one of the following: {', '.join('.' + d for d in VALID_DOMAINS)}")
     if findall(pattern_name, email.split("@")[0])[0] != email.split("@")[0]:
