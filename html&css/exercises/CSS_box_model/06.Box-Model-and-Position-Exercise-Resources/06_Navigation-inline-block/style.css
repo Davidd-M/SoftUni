@@ -1,0 +1,28 @@
+body{
+    font-family: Helvetica, sans-serif;
+}
+
+header{
+    margin-top: 36px;
+    border-bottom: solid 1px;
+}
+
+header h1{
+    display: inline-block;
+    font-weight: 800;
+    margin-right: 50px;
+}
+
+header nav{
+    display: inline-block;
+}
+
+nav ul li{
+    margin: 10px;
+    display: inline-block;
+}
+
+li a{
+    color: green;
+    text-decoration: none;
+}

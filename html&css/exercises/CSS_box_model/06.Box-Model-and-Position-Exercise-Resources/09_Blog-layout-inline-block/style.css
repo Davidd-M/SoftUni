@@ -1,0 +1,22 @@
+body{
+    font-family: Helvetica sans-serif;
+    background-color: rgb(238, 238, 238);
+    color: rgb(51, 51, 51);
+    padding-left: 35px;
+}
+
+article{
+    padding-right: 320px;
+}
+
+img{
+    width: 70%;
+}
+
+aside{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: auto;
+}
