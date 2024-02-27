@@ -1,6 +1,6 @@
 symbols = ["-", ",", ".", "!", "?", "'"]
 
-output_file = open("output_2.txt", "w")
+output_file = open("output.txt", "w")
 
 with open("text.txt", "r") as text:
     lines = text.readlines()
