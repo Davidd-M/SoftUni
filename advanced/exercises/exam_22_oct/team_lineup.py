@@ -19,14 +19,12 @@ def team_lineup(*args):
 
 
 print(team_lineup(
-   ("Harry Kane", "England"),
-   ("Manuel Neuer", "Germany"),
-   ("Raheem Sterling", "England"),
-   ("Toni Kroos", "Germany"),
-   ("Cristiano Ronaldo", "Portugal"),
-   ("Thomas Muller", "Germany"),
-   ("Bruno Fernandes", "Portugal"),
-   ("Bernardo Silva", "Portugal"),
-   ("Harry Maguire", "England")))
-
-
+    ("Harry Kane", "England"),
+    ("Manuel Neuer", "Germany"),
+    ("Raheem Sterling", "England"),
+    ("Toni Kroos", "Germany"),
+    ("Cristiano Ronaldo", "Portugal"),
+    ("Thomas Muller", "Germany"),
+    ("Bruno Fernandes", "Portugal"),
+    ("Bernardo Silva", "Portugal"),
+    ("Harry Maguire", "England")))
