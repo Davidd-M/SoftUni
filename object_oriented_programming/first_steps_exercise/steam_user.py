@@ -12,7 +12,9 @@ class SteamUser():
 
     def buy_game(self, game):
         if game not in self.games:
-            
+            self.games.append(game)
+            return f"{self.username} bought {game}"
+        return f"{game} is already in your library"
 
     def status(self):
-        pass
+        return f"{self.username} has {len(self.games)} games. Total play time: {self.played_hours}"
