@@ -99,4 +99,3 @@ class NauticalCatchChallengeApp:
         result = f"**Nautical Catch Challenge Statistics**\n"
         result += '\n'.join(str(d) for d in sorted_divers)
         return result
-    
