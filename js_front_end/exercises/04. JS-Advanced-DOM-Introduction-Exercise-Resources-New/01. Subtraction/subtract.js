@@ -7,4 +7,5 @@ function subtract() {
     const secondNumber = Number(secondNumberElement.value);
 
     resultElement.textContent = firstNumber - secondNumber;
+    
 }
