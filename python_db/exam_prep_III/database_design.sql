@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS categories (
 );
 
 CREATE TABLE IF NOT EXISTS addresses(
-	id INT PRIMARY KEY,
+	id SERIAL PRIMARY KEY,
 	street_name VARCHAR(100) NOT NULL,
 	street_number INT NOT NULL, -- CHECK
 	town VARCHAR(30) NOT NULL,
