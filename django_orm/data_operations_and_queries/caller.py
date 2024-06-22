@@ -2,11 +2,13 @@ import os
 import django
 from django.db.models import QuerySet
 
+from populate_db import populate_model_with_data
+
 # Set up Django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "orm_skeleton.settings")
 django.setup()
 
-from main_app.models import Pet, Artifact, Location, Car
+from main_app.models import Pet, Artifact, Location, Car, Task
 
 
 def create_pet(name: str, species: str):
@@ -98,6 +100,35 @@ def get_recent_cars():
 def delete_last_car():
     Car.objects.last().delete()
 
-
 # apply_discount()
 # print(get_recent_cars())
+
+
+def show_unfinished_tasks():
+    tasks = Task.objects.filter(is_finished=False)
+    result = []
+
+    for task in tasks:
+        result.append(f"Task - {task.title} needs to be done until {task.due_date}!")
+
+    return "\n".join(result)
+
+
+def complete_odd_tasks() -> None:
+    tasks = Task.objects.all()
+
+    for task in tasks:
+        if task.id % 2 != 0:
+            task.is_finished = True
+            task.save()
+
+
+def encode_and_replace(text: str, task_title: str):
+    tasks = Task.objects.filter(title=task_title)
+
+    for task in tasks:
+        task.description = ''.join(chr(ord(x) - 3) for x in text)
+        task.save()
+
+
+# encode_and_replace("Zdvk#wkh#glvkhv$", "Task 2")
