@@ -6,7 +6,7 @@ from django.db.models import QuerySet
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "orm_skeleton.settings")
 django.setup()
 
-from main_app.models import Pet, Artifact, Location
+from main_app.models import Pet, Artifact, Location, Car
 
 
 def create_pet(name: str, species: str):
@@ -72,6 +72,32 @@ def get_capitals() -> QuerySet:
 def delete_first_location():
     Location.objects.first().delete()
 
-print(show_all_locations())
-print(new_capital())
-print(get_capitals())
+# print(show_all_locations())
+# print(new_capital())
+# print(get_capitals())
+
+
+def apply_discount():
+    cars = Car.objects.all()
+
+    for car in cars:
+        discount = 0
+        car_year = str(car.year)
+
+        for digit in car_year:
+            discount += int(digit)
+
+        car.price_with_discount = float(car.price) - (float(car.price) * (discount / 100))
+        car.save()
+
+
+def get_recent_cars():
+    return Car.objects.filter(year__gte=2021).values("model", "price_with_discount")
+
+
+def delete_last_car():
+    Car.objects.last().delete()
+
+
+# apply_discount()
+# print(get_recent_cars())
