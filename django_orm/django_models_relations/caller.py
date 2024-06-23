@@ -6,7 +6,7 @@ from django.db.models import QuerySet
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "orm_skeleton.settings")
 django.setup()
 
-from main_app.models import Author, Book, Artist, Song
+from main_app.models import Author, Book, Artist, Song, Product, Review
 
 
 def show_all_authors_with_their_books() -> str:
@@ -109,4 +109,27 @@ def remove_song_from_artist(artist_name: str, song_title: str) -> None:
 #
 # for song in songs:
 #     print(f"Songs by Daniel Di Angelo after removal: {song.title}")
+
+
+def calculate_average_rating_for_product_by_name(product_name: str) -> float:
+    product = Product.objects.get(name=product_name)
+    reviews = product.reviews.all()
+    total_sum = 0
+
+    for review in reviews:
+        total_sum += review.rating
+
+    return total_sum / len(reviews)
+
+
+def get_reviews_with_high_ratings(threshold: int) -> QuerySet:
+    return Review.objects.filter(rating__gte=threshold)
+
+
+def get_products_with_no_reviews() -> QuerySet[Product]:
+    return Product.objects.filter(reviews__isnull=True).order_by("-name")
+
+
+def delete_products_without_reviews() -> None:
+    Product.objects.filter(reviews__isnull=True).delete()
 
