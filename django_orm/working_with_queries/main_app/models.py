@@ -18,6 +18,50 @@ class ArtworkGallery(models.Model):
     )
 
 
+class Laptop(models.Model):
+    BRANDS = (
+        ("Asus", "Asus"),
+        ("Acer", "Acer"),
+        ("Apple", "Apple"),
+        ("Lenovo", "Lenovo"),
+        ("Dell", "Dell"),
+    )
+
+    OS_CHOICES = (
+        ("Windows", "Windows"),
+        ("MacOS", "MacOS"),
+        ("Linux", "Linux"),
+        ("Chrome OS", "Chrome OS"),
+    )
+
+    brand = models.CharField(
+        max_length=20,
+        choices=BRANDS,
+    )
+
+    processor = models.CharField(
+        max_length=100,
+    )
+
+    memory = models.PositiveIntegerField(
+        help_text="Memory in GB",
+    )
+
+    storage = models.PositiveIntegerField(
+        help_text="Storage in GB",
+    )
+
+    operation_system = models.CharField(
+        max_length=250,
+        choices=OS_CHOICES,
+    )
+
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+    )
+
+
 class ChessPlayer(models.Model):
     username = models.CharField(max_length=100, unique=True)
     title = models.CharField(max_length=100, default="no title")
