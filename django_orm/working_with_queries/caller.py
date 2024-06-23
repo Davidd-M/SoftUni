@@ -1,4 +1,6 @@
 import os
+from typing import List
+
 import django
 
 
@@ -7,7 +9,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "orm_skeleton.settings")
 django.setup()
 
 
-from main_app.models import ArtworkGallery, Laptop
+from main_app.models import ArtworkGallery, Laptop, ChessPlayer
 
 
 def show_highest_rated_art() -> str:
@@ -119,3 +121,70 @@ def delete_inexpensive_laptops() -> None:
 #
 # print(asus_laptop.storage)
 # print(lenovo_laptop.operation_system)
+
+
+def bulk_create_chess_players(*args: List[ChessPlayer]) -> None:
+    ChessPlayer.objects.bulk_create(*args)
+
+
+def delete_chess_players() -> None:
+    ChessPlayer.objects.filter(title='no title').delete()
+
+
+def change_chess_games_won() -> None:
+    ChessPlayer.objects.filter(title='GM').update(games_won=30)
+
+
+def change_chess_games_lost() -> None:
+    ChessPlayer.objects.filter(title='no title').update(games_lost=25)
+
+
+def change_chess_games_drawn() -> None:
+    ChessPlayer.objects.update(games_drawn=10)
+
+
+def grand_chess_title_GM() -> None:
+    ChessPlayer.objects.filter(rating__gte=2400).update(title='GM')
+
+
+def grand_chess_title_IM() -> None:
+    ChessPlayer.objects.filter(rating__range=(2300, 2399)).update(title='IM')
+
+
+def grand_chess_title_FM() -> None:
+    ChessPlayer.objects.filter(rating__range=(2200, 2299)).update(title='FM')
+
+
+def grand_chess_title_regular_player() -> None:
+    ChessPlayer.objects.filter(rating__range=(0, 2199)).update(title='regular player')
+
+
+# player1 = ChessPlayer(
+#     username='Player1',
+#     title='no title',
+#     rating=2200,
+#     games_played=50,
+#     games_won=20,
+#     games_lost=25,
+#     games_drawn=5,
+# )
+# player2 = ChessPlayer(
+#     username='Player2',
+#     title='IM',
+#     rating=2350,
+#     games_played=80,
+#     games_won=40,
+#     games_lost=25,
+#     games_drawn=15,
+# )
+#
+# # Call the bulk_create_chess_players function
+# bulk_create_chess_players([player1, player2])
+
+# # Call the delete_chess_players function
+# delete_chess_players()
+
+# # Check that the players are deleted
+# print("Number of Chess Players after deletion:", ChessPlayer.objects.count())
+
+
