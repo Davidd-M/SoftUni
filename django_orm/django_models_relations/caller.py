@@ -8,7 +8,7 @@ from django.db.models import QuerySet
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "orm_skeleton.settings")
 django.setup()
 
-from main_app.models import Author, Book, Artist, Song, Product, Review, DrivingLicense, Driver
+from main_app.models import Author, Book, Artist, Song, Product, Review, DrivingLicense, Driver, Owner, Registration, Car
 
 
 def show_all_authors_with_their_books() -> str:
@@ -152,3 +152,33 @@ def get_drivers_with_expired_licenses(due_date: date) -> [Driver]:
 
     return list(expired_licenses)
 
+
+def register_car_by_owner(owner: Owner) -> str:
+    free_reg = Registration.objects.filter(car__isnull=True).first()
+    free_car = Car.objects.filter(registration__isnull=True).first()
+
+    free_car.owner = owner
+    free_car.registration = free_reg
+
+    free_car.save()
+
+    free_reg.car = free_car
+    free_reg.registration_date = date.today()
+
+    free_reg.save()
+
+    return f"Successfully registered {free_car.model} to {free_car.owner.name} with registration number {free_reg.registration_number}."
+
+
+# # Create owners
+# owner1 = Owner.objects.create(name='Ivelin Milchev')
+# owner2 = Owner.objects.create(name='Alice Smith')
+#
+# # Create cars
+# car1 = Car.objects.create(model='Citroen C5', year=2004)
+# car2 = Car.objects.create(model='Honda Civic', year=2021)
+# # Create instances of the Registration model for the cars
+# registration1 = Registration.objects.create(registration_number='TX0044XA')
+# registration2 = Registration.objects.create(registration_number='XYZ789')
+
+# print(register_car_by_owner(owner1))
