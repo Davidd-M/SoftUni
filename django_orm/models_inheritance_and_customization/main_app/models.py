@@ -1,4 +1,6 @@
 from django.db import models
+from django.core.exceptions import ValidationError
+
 
 
 class BaseCharacter(models.Model):
@@ -135,7 +137,7 @@ class Message(models.Model):
     def reply_to_message(self, reply_content: str):
         message = Message(
             sender=self.receiver,
-            receiver=self.sender,  # TODO TO WHOM IS HE MESSAGE SENT TO
+            receiver=self.sender,
             content=reply_content,
         )
 
@@ -155,3 +157,23 @@ class Message(models.Model):
         return message
 
 
+class StudentIDField(models.PositiveIntegerField):
+    def to_python(self, value):
+        try:
+            return int(value)
+        except (ValueError, TypeError):
+            raise ValueError('Invalid input for student ID')
+
+    def get_prep_value(self, value):
+        if int(value) <= 0:
+            raise ValidationError('ID cannot be less than or equal to zero')
+
+        return value
+
+
+class Student(models.Model):
+    name = models.CharField(
+        max_length=100,
+    )
+
+    student_id = StudentIDField()
