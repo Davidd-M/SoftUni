@@ -1,4 +1,6 @@
 import os
+from decimal import Decimal
+
 import django
 from django.db.models import Q, F, Count
 
@@ -51,4 +53,58 @@ def get_last_sold_products() -> str:
         return ''
 
     return f"Last sold products: {', '.join(products)}"
+
+
+def get_top_products() -> str:
+    products = (Product.objects.annotate(quantity_sold=Count('order'))
+                .filter(quantity_sold__gt=0)
+                .order_by('-quantity_sold', 'name'))[:5]
+
+    if not products.exists():
+        return ''
+
+    return (f"Top products:\n" +
+            '\n'.join(f"{p.name}, sold {p.quantity_sold} times" for p in products))
+
+
+def apply_discounts() -> str:
+    orders = (Order.objects.annotate(products_count=Count('products'))
+              .filter(is_completed=False, products_count__gt=2)
+              .update(total_price=F('total_price')*0.9))
+
+    return f"Discount applied to {orders} orders."
+
+
+def complete_order() -> str:
+    oldest_order = Order.objects.filter(is_completed=False).order_by('creation_date').first()
+
+    if not oldest_order:
+        return ''
+
+    products = oldest_order.products.all()
+
+    for p in products:
+        p.in_stock -= 1
+
+        if p.in_stock <= 0:
+            p.is_available = False
+            p.in_stock = 0
+
+        p.save()
+
+    '''
+    order.products.update(
+        in_stock=F('in_stock') - 1,
+        is_available=Case(
+            When(in_stock=1, then=Value(False)),
+            default=F('is_available'),
+            output_field=BooleanField()            
+        )
+    )
+    '''
+
+    oldest_order.is_completed = True
+    oldest_order.save()
+
+    return "Order has been completed!"
 
