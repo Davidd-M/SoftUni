@@ -85,7 +85,8 @@ class Mission(BaseModel):
 
     spacecraft = models.ForeignKey(
         Spacecraft,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='spacecrafts_usage'
     )
 
     astronauts = models.ManyToManyField(
@@ -97,5 +98,6 @@ class Mission(BaseModel):
         Astronaut,
         on_delete=models.SET_NULL,
         null=True,
-        blank=True,  # TODO NOT SURE ABOUT blank
+        blank=True,
+        related_name='commanded_missions',
     )
