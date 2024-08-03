@@ -1,6 +1,12 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator, MinValueValidator, RegexValidator
 from django.db import models
+from django.db.models import Count
+
+
+class AstronautManager(models.Manager):
+    def get_astronauts_by_missions_count(self):
+        return self.annotate(missions_count=Count('missions')).order_by('-missions_count', 'phone_number')
 
 
 class BaseModel(models.Model):
@@ -18,10 +24,9 @@ class BaseModel(models.Model):
 
 
 class Astronaut(BaseModel):
-
     phone_number = models.CharField(
         max_length=15,
-        validators=[RegexValidator(regex='^\d+$')],
+        validators=[RegexValidator(regex=r'^\d+$')],
         unique=True,
     )
 
@@ -38,6 +43,8 @@ class Astronaut(BaseModel):
         default=0,
         validators=[MinValueValidator(0)]
     )
+
+    objects = AstronautManager()
 
 
 class Spacecraft(BaseModel):
@@ -83,7 +90,7 @@ class Mission(BaseModel):
 
     astronauts = models.ManyToManyField(
         Astronaut,
-        related_name='astronauts'
+        related_name='missions'
     )
 
     commander = models.ForeignKey(
